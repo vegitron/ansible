@@ -464,10 +464,14 @@ class Inventory(object):
         self.get_group("ungrouped").add_host(new_host)
         return new_host
 
-    def clear_pattern_cache(self):
-        ''' called exclusively by the add_host plugin to allow patterns to be recalculated '''
+    @classmethod
+    def clear_host_cache(cls):
         global HOSTS_PATTERNS_CACHE
         HOSTS_PATTERNS_CACHE = {}
+
+    def clear_pattern_cache(self):
+        ''' called exclusively by the add_host plugin to allow patterns to be recalculated '''
+        Inventory.clear_pattern_cache()
         self._pattern_cache = {}
 
     def groups_for_host(self, host):
